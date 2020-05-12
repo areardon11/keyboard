@@ -42,7 +42,7 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ergodox_pretty(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_LEFT,                                        KC_RIGHT,       KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_MINUS,
-    KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           TG(1),                                          TG(1),          KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
+    KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           TG(1),                                          TG(3),          KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_BSLASH,
     KC_BSPACE,      KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                                                           KC_H,           KC_J,           KC_K,           KC_L,           LT(2,KC_SCOLON),LGUI_T(KC_QUOTE),
     KC_LSHIFT,      LCTL_T(KC_Z),   KC_X,           KC_C,           KC_V,           KC_B,           KC_HYPR,                                        KC_MEH,         KC_N,           KC_M,           KC_COMMA,       KC_DOT,         RCTL_T(KC_SLASH),KC_RSHIFT,
     LT(1,KC_GRAVE), WEBUSB_PAIR,    LALT(KC_LSHIFT),KC_LEFT,        KC_RIGHT,                                                                                                       KC_UP,          KC_DOWN,        KC_LBRACKET,    KC_RBRACKET,    MO(1),
@@ -71,11 +71,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_WWW_BACK
   ),
   [3] = LAYOUT_ergodox_pretty(
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_CAPSLOCK,    KC_A,           KC_S,           KC_D,           KC_F,                                                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_LSHIFT,      KC_Z,           KC_X,           KC_C,           KC_V,           KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_UP,          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
-    KC_TRANSPARENT, KC_GRAVE,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                                 KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TAB,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_6,                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_TRANSPARENT, KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_CAPSLOCK,    KC_CAPSLOCK,    KC_A,           KC_S,           KC_D,           KC_F,                                                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_GRAVE,       KC_LSHIFT,      KC_Z,           KC_X,           KC_C,           KC_V,           KC_G,                                           KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_UP,          KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_GRAVE,       KC_LCTRL,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                                                                                 KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                                                     KC_TRANSPARENT, KC_TRANSPARENT,
                                                                                     KC_SPACE,       KC_LCTRL,       KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT
@@ -83,62 +83,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-extern bool g_suspend_state;
-extern rgb_config_t rgb_matrix_config;
+rgblight_config_t rgblight_config;
+bool disable_layer_color = 0;
 
-void keyboard_post_init_user(void) {
-  rgb_matrix_enable();
-}
-
-const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
-    [0] = { {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213}, {91,161,213} },
-
-    [1] = { {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222}, {7,207,222} },
-
-    [2] = { {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234}, {46,216,234} },
-
-    [3] = { {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230}, {133,213,230} },
-
-};
-
-void set_layer_color(int layer) {
-  for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
-    HSV hsv = {
-      .h = pgm_read_byte(&ledmap[layer][i][0]),
-      .s = pgm_read_byte(&ledmap[layer][i][1]),
-      .v = pgm_read_byte(&ledmap[layer][i][2]),
-    };
-    if (!hsv.h && !hsv.s && !hsv.v) {
-        rgb_matrix_set_color( i, 0, 0, 0 );
-    } else {
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
-    }
-  }
-}
-
-void rgb_matrix_indicators_user(void) {
-  if (g_suspend_state || keyboard_config.disable_layer_led) { return; }
-  switch (biton32(layer_state)) {
-    case 0:
-      set_layer_color(0);
-      break;
-    case 1:
-      set_layer_color(1);
-      break;
-    case 2:
-      set_layer_color(2);
-      break;
-    case 3:
-      set_layer_color(3);
-      break;
-   default:
-    if (rgb_matrix_get_flags() == LED_FLAG_NONE)
-      rgb_matrix_set_color_all(0, 0, 0);
-    break;
-  }
-}
+bool suspended = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -147,22 +95,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         rgblight_mode(1);
       }
       return false;
+    case TOGGLE_LAYER_COLOR:
+      if (record->event.pressed) {
+        disable_layer_color ^= 1;
+      }
+      return false;
     case HSV_172_255_255:
       if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(172,255,255);
+        #ifdef RGBLIGHT_ENABLE
+          rgblight_enable();
+          rgblight_mode(1);
+          rgblight_sethsv(172,255,255);
+        #endif
       }
       return false;
     case HSV_86_255_128:
       if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(86,255,128);
+        #ifdef RGBLIGHT_ENABLE
+          rgblight_enable();
+          rgblight_mode(1);
+          rgblight_sethsv(86,255,128);
+        #endif
       }
       return false;
     case HSV_27_255_255:
       if (record->event.pressed) {
-        rgblight_mode(1);
-        rgblight_sethsv(27,255,255);
+        #ifdef RGBLIGHT_ENABLE
+          rgblight_enable();
+          rgblight_mode(1);
+          rgblight_sethsv(27,255,255);
+        #endif
       }
       return false;
   }
@@ -171,41 +133,89 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 uint32_t layer_state_set_user(uint32_t state) {
 
-  uint8_t layer = biton32(state);
+    uint8_t layer = biton32(state);
 
-  ergodox_board_led_off();
-  ergodox_right_led_1_off();
-  ergodox_right_led_2_off();
-  ergodox_right_led_3_off();
-  switch (layer) {
-    case 1:
-      ergodox_right_led_1_on();
-      break;
-    case 2:
-      ergodox_right_led_2_on();
-      break;
-    case 3:
-      ergodox_right_led_3_on();
-      break;
-    case 4:
-      ergodox_right_led_1_on();
-      ergodox_right_led_2_on();
-      break;
-    case 5:
-      ergodox_right_led_1_on();
-      ergodox_right_led_3_on();
-      break;
-    case 6:
-      ergodox_right_led_2_on();
-      ergodox_right_led_3_on();
-      break;
-    case 7:
-      ergodox_right_led_1_on();
-      ergodox_right_led_2_on();
-      ergodox_right_led_3_on();
-      break;
-    default:
-      break;
-  }
-  return state;
+    ergodox_board_led_off();
+    ergodox_right_led_1_off();
+    ergodox_right_led_2_off();
+    ergodox_right_led_3_off();
+    switch (layer) {
+      case 1:
+        ergodox_right_led_1_on();
+        break;
+      case 2:
+        ergodox_right_led_2_on();
+        break;
+      case 3:
+        ergodox_right_led_3_on();
+        break;
+      case 4:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        break;
+      case 5:
+        ergodox_right_led_1_on();
+        ergodox_right_led_3_on();
+        break;
+      case 6:
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        break;
+      case 7:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        break;
+      default:
+        break;
+    }
+    switch (layer) {
+      case 0:
+        if(!disable_layer_color) {
+          rgblight_enable_noeeprom();
+          rgblight_mode_noeeprom(1);
+          rgblight_sethsv_noeeprom(86,255,98);
+        }
+        break;
+      case 1:
+        if(!disable_layer_color) {
+          rgblight_enable_noeeprom();
+          rgblight_mode_noeeprom(1);
+          rgblight_sethsv_noeeprom(0,242,125);
+        }
+        break;
+      case 2:
+        if(!disable_layer_color) {
+          rgblight_enable_noeeprom();
+          rgblight_mode_noeeprom(1);
+          rgblight_sethsv_noeeprom(86,255,182);
+        }
+        break;
+      case 3:
+        if(!disable_layer_color) {
+          rgblight_enable_noeeprom();
+          rgblight_mode_noeeprom(1);
+          rgblight_sethsv_noeeprom(143,255,127);
+        }
+        break;
+      default:
+        if(!disable_layer_color) {
+          rgblight_config.raw = eeconfig_read_rgblight();
+          if(rgblight_config.enable == true) {
+            rgblight_enable();
+            rgblight_mode(rgblight_config.mode);
+            rgblight_sethsv(rgblight_config.hue, rgblight_config.sat, rgblight_config.val);
+          }
+          else {
+            rgblight_disable();
+          }
+        }
+        break;
+    }
+    return state;
+
 };
+
+void keyboard_post_init_user(void) {
+  layer_state_set_user(layer_state);
+}
